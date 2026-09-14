@@ -4,45 +4,116 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kalkulator BPJS Ketenagakerjaan | Simulasi Iuran & Manfaat</title>
-  <meta name="description" content="Sistem kalkulator otomatis iuran BPJAMSOSTEK. Hitung JKK, JKM, JHT berdasarkan jabatan dan jumlah pekerja." />
+  <meta name="description" content="Sistem kalkulator otomatis iuran BPJAMSOSTEK. Hitung JKK, JKM, JHT, JP berdasarkan jabatan dan jumlah pekerja." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
+
+<!-- ==================== HALAMAN WELCOME ==================== -->
+<div id="page-welcome">
+  <div class="welcome-bg-shapes">
+    <div class="wshape wshape-1"></div>
+    <div class="wshape wshape-2"></div>
+    <div class="wshape wshape-3"></div>
+  </div>
+  <div class="welcome-logo" style="display:flex; justify-content:center; gap: 20px;">
+    <div class="logo-icon">
+      <img src="logo-bpjs.png?v=2" alt="Logo BPJS Ketenagakerjaan" />
+    </div>
+    <div class="logo-icon">
+      <img src="logo-simtek.png" alt="Logo SIMTEK" />
+    </div>
+  </div>
+  <div class="welcome-hero">
+    <h1>Simulasi Iuran &amp; Manfaat<br/><span class="gradient-text">BPJAMSOSTEK</span></h1>
+    <p>PILIH JENIS PROGRAM KEPESERTAAN UNTUK MEMULAI SIMULASI IURAN DAN MANFAAT</p>
+  </div>
+  <div class="program-cards">
+    <div class="program-card program-pu" id="card-pu" onclick="showProgram('PU')">
+      <div class="program-card-icon">🏢</div>
+      <div class="program-card-badge">Tersedia</div>
+      <h2 class="program-card-title">PU</h2>
+      <p class="program-card-sub">Penerima Upah</p>
+      <p class="program-card-desc">Pekerja dengan hubungan kerja (karyawan, pegawai, buruh) yang menerima upah/gaji dari pemberi kerja.</p>
+      <div class="program-card-covers">
+        <span>JKK</span><span>JKM</span><span>JHT</span><span>JP</span>
+      </div>
+      <button class="program-card-btn">Mulai Simulasi →</button>
+    </div>
+    <div class="program-card program-bpu" id="card-bpu" onclick="showProgram('BPU')">
+      <div class="program-card-icon">👤</div>
+      <div class="program-card-badge">Tersedia</div>
+      <h2 class="program-card-title">BPU</h2>
+      <p class="program-card-sub">Bukan Penerima Upah</p>
+      <p class="program-card-desc">Pekerja mandiri, wirausaha, freelancer yang tidak terikat hubungan kerja dengan pemberi kerja.</p>
+      <div class="program-card-covers">
+        <span>JKK</span><span>JKM</span><span>JHT</span>
+      </div>
+      <button class="program-card-btn">Mulai Simulasi →</button>
+    </div>
+    <div class="program-card program-jakon program-card-disabled" id="card-jakon">
+      <div class="program-card-icon">🏗️</div>
+      <div class="program-card-badge program-badge-soon">Segera Hadir</div>
+      <h2 class="program-card-title">JAKON</h2>
+      <p class="program-card-sub">Jasa Konstruksi</p>
+      <p class="program-card-desc">Tenaga kerja pada proyek konstruksi dengan iuran dihitung dari nilai kontrak proyek bukan upah.</p>
+      <div class="program-card-covers">
+        <span>JKK</span><span>JKM</span>
+      </div>
+      <button class="program-card-btn program-btn-disabled" disabled>Segera Hadir</button>
+    </div>
+  </div>
+  <p class="welcome-footer">Berdasarkan PP 44/2015 &amp; PP 82/2019 | BPJS Ketenagakerjaan</p>
+</div>
+
+<!-- ==================== HALAMAN KALKULATOR PU ==================== -->
+<div id="page-kalkulator" style="display:none">
 <header class="site-header">
   <div class="header-bg-shapes"><div class="shape shape-1"></div><div class="shape shape-2"></div><div class="shape shape-3"></div></div>
   <div class="header-content">
     <div class="logo-area">
-      <div class="logo-icon">
-        <img src="logo-bpjs.png?v=2" alt="Logo BPJS Ketenagakerjaan" />
+      <button class="btn-kembali" id="btnKembali" onclick="kembali()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Kembali
+      </button>
+      <div style="display:flex; gap:15px; margin-right:1.5rem;">
+        <div class="logo-icon">
+          <img src="logo-bpjs.png?v=2" alt="Logo BPJS Ketenagakerjaan" />
+        </div>
+        <div class="logo-icon">
+          <img src="logo-simtek.png" alt="Logo SIMTEK" />
+        </div>
       </div>
       <div class="logo-text">
-        <span class="logo-sub">Sistem Simulasi Iuran Ketenagakerjaan</span>
+        <span class="logo-sub">Simulasi Iuran — Program <strong id="programLabel">PU</strong></span>
       </div>
     </div>
     <div class="header-badges">
       <span class="badge badge-jkk">JKK</span>
       <span class="badge badge-jkm">JKM</span>
       <span class="badge badge-jht">JHT</span>
+      <span class="badge badge-jp">JP</span>
     </div>
   </div>
   <div class="header-hero-text">
     <h1>Simulasi Iuran &amp; Manfaat<br/><span class="gradient-text">BPJAMSOSTEK</span></h1>
-    <p>Masukkan data jabatan &amp; jumlah pekerja — sistem menghitung otomatis seluruh iuran dan manfaat JKK, JKM, dan JHT sesuai PP 44/2015 &amp; PP 82/2019.</p>
+    <p>Masukkan data jabatan &amp; jumlah pekerja — sistem menghitung otomatis seluruh iuran dan manfaat JKK, JKM, JHT, JP sesuai PP 44/2015 &amp; PP 82/2019.</p>
   </div>
 </header>
 <main class="main-container">
+  <!-- SECTION 1: INFORMASI INSTANSI -->
   <section class="card section-info" id="section-info">
     <div class="card-header-row">
       <div class="step-badge">1</div>
-      <div><h2 class="section-title">Informasi Instansi</h2><p class="section-desc">Masukkan identitas perusahaan atau desa</p></div>
+      <div><h2 class="section-title">Informasi Instansi</h2><p class="section-desc">Masukkan identitas perusahaan atau instansi</p></div>
     </div>
     <div class="form-grid form-grid-3">
       <div class="form-group">
-        <label for="namaInstansi">Nama Perusahaan / Desa</label>
+        <label for="namaInstansi">Nama Perusahaan / Instansi</label>
         <input type="text" id="namaInstansi" placeholder="Contoh: PT. Maju Sejahtera / Desa Sukamaju" />
       </div>
       <div class="form-group">
@@ -50,16 +121,220 @@
         <input type="month" id="bulanTahun" />
       </div>
       <div class="form-group">
-        <label for="jenisInstansi">Jenis Instansi</label>
-        <select id="jenisInstansi">
-          <option value="perusahaan">Perusahaan Swasta</option>
-          <option value="desa">Pemerintah Desa</option>
-          <option value="bumn">BUMN / BUMD</option>
-          <option value="lainnya">Lainnya</option>
+        <label for="jenisUsaha">Jenis Usaha / Kelompok Risiko JKK</label>
+        <select id="jenisUsaha" onchange="onJenisUsahaChange()">
+          <option value="" disabled selected>-- Pilih Jenis Usaha --</option>
+          <optgroup label="⬤ Kelompok I — Tingkat Risiko Sangat Rendah (JKK: 0.24%)">
+            <option value="I|0.24|Penjahitan/konveksi">Penjahitan / Konveksi</option>
+            <option value="I|0.24|Pabrik topi">Pabrik Topi</option>
+            <option value="I|0.24|Industri pakaian lainnya">Industri Pakaian Lainnya (payung, ikat pinggang, bretel)</option>
+            <option value="I|0.24|Pembuatan layar dan krey dari tekstil">Pembuatan Layar dan Krey dari Tekstil</option>
+            <option value="I|0.24|Pabrik keperluan rumah tangga">Pabrik Keperluan Rumah Tangga (sprei, selimut, terpal, gorden)</option>
+            <option value="I|0.24|Perdagangan ekspor impor">Perdagangan Ekspor Impor</option>
+            <option value="I|0.24|Perdagangan besar lainnya">Perdagangan Besar Lainnya (agen, distributor, makelar)</option>
+            <option value="I|0.24|Perdagangan lainnya">Perdagangan Lainnya (toko, koperasi, penjualan makanan)</option>
+            <option value="I|0.24|Bank dan kantor-kantor perdagangan">Bank dan Kantor-Kantor Perdagangan</option>
+            <option value="I|0.24|Perusahaan pertanggungan/asuransi">Perusahaan Pertanggungan / Asuransi</option>
+            <option value="I|0.24|Jasa pemerintahan">Jasa Pemerintahan</option>
+            <option value="I|0.24|Apotik, pengobatan dan kesehatan lainnya">Apotik, Pengobatan dan Kesehatan Lainnya</option>
+            <option value="I|0.24|Organisasi-organisasi keagamaan">Organisasi Keagamaan</option>
+            <option value="I|0.24|Lembaga kesejahteraan/sosial">Lembaga Kesejahteraan / Sosial</option>
+            <option value="I|0.24|Persatuan perdagangan dan organisasi buruh">Persatuan Perdagangan dan Organisasi Buruh</option>
+            <option value="I|0.24|Balai penyidikan yang berdiri sendiri">Balai Penyidikan / Penelitian</option>
+            <option value="I|0.24|Jasa pengamanan dan jasa-jasa umum lainnya">Jasa Pengamanan, Museum, Perpustakaan, Kebun Binatang</option>
+            <option value="I|0.24|Pemangkas rambut dan salon kecantikan">Pemangkas Rambut dan Salon Kecantikan</option>
+            <option value="I|0.24|Peternakan">Peternakan</option>
+            <option value="I|0.24|Industri kreatif">Industri Kreatif (animasi, desain grafis, arsitektur)</option>
+            <option value="I|0.24|Jasa profesi">Jasa Profesi (dokter, pengacara, akuntan, konsultan)</option>
+            <option value="I|0.24|Reparasi arloji dan lonceng">Reparasi Arloji dan Lonceng</option>
+            <option value="I|0.24|Bioskop">Bioskop</option>
+          </optgroup>
+          <optgroup label="⬤ Kelompok II — Tingkat Risiko Rendah (JKK: 0.54%)">
+            <option value="II|0.54|Pertanian rakyat">Pertanian Rakyat</option>
+            <option value="II|0.54|Perkebunan gula">Perkebunan Gula</option>
+            <option value="II|0.54|Perkebunan tembakau">Perkebunan Tembakau</option>
+            <option value="II|0.54|Perkebunan bukan tahunan">Perkebunan Bukan Tahunan (kecuali gula dan tembakau)</option>
+            <option value="II|0.54|Perkebunan tahunan">Perkebunan Tahunan (karet, coklat, kelapa, dll)</option>
+            <option value="II|0.54|Pabrik teh">Pabrik Teh</option>
+            <option value="II|0.54|Penggorengan dan pembuatan kopi bubuk">Penggorengan dan Pembuatan Kopi Bubuk</option>
+            <option value="II|0.54|Pabrik rokok">Pabrik Rokok (sigaret, cerutu, kretek)</option>
+            <option value="II|0.54|Perusahaan tembakau lainnya">Perusahaan Tembakau Lainnya</option>
+            <option value="II|0.54|Pabrik kina">Pabrik Kina</option>
+            <option value="II|0.54|Pabrik alat-alat pengangkutan lainnya">Pabrik Alat-Alat Pengangkutan Lainnya</option>
+            <option value="II|0.54|Industri alat-alat pekerjaan dan laboratorium">Industri Alat-Alat Pekerjaan, Pengukuran dan Laboratorium</option>
+            <option value="II|0.54|Industri alat-alat musik">Industri Alat-Alat Musik</option>
+            <option value="II|0.54|Pabrik alat-alat olah raga">Pabrik Alat-Alat Olah Raga</option>
+            <option value="II|0.54|Pabrik mainan anak">Pabrik Mainan Anak</option>
+            <option value="II|0.54|Perdagangan barang tak bergerak">Perdagangan Barang Tak Bergerak (penyewaan alat, tanah, rumah)</option>
+            <option value="II|0.54|Jasa perhubungan">Jasa Perhubungan (handy talky, radio)</option>
+            <option value="II|0.54|Perusahaan pembuatan film dan pengedar film">Perusahaan Pembuatan Film dan Pengedar Film</option>
+            <option value="II|0.54|Bioskop hiburan">Bioskop / Hiburan</option>
+            <option value="II|0.54|Sandiwara, komedi, opera, sirkus, band">Sandiwara, Komedi, Opera, Sirkus, Band</option>
+            <option value="II|0.54|Jasa hiburan selain sandiwara dan bioskop">Jasa Hiburan Selain Sandiwara dan Bioskop</option>
+            <option value="II|0.54|Perusahaan binatu, laundry">Perusahaan Binatu / Laundry</option>
+            <option value="II|0.54|Perusahaan potret/studio photo">Perusahaan Potret / Studio Photo</option>
+            <option value="II|0.54|Penyiaran radio">Penyiaran Radio</option>
+            <option value="II|0.54|Rumah makan dan minuman">Rumah Makan dan Minuman</option>
+            <option value="II|0.54|Hotel, penginapan, dan ruang sewa">Hotel, Penginapan, dan Ruang Sewa</option>
+            <option value="II|0.54|Reparasi arloji dan lonceng kelompok II">Reparasi Arloji dan Lonceng (Kelompok II)</option>
+          </optgroup>
+          <optgroup label="⬤ Kelompok III — Tingkat Risiko Sedang (JKK: 0.89%)">
+            <option value="III|0.89|Pelayanan pengairan">Pelayanan Pengairan</option>
+            <option value="III|0.89|Perusahaan kehutanan">Perusahaan Kehutanan</option>
+            <option value="III|0.89|Pengumpulan hasil hutan">Pengumpulan Hasil Hutan</option>
+            <option value="III|0.89|Pembakaran arang di hutan">Pembakaran Arang (di Hutan)</option>
+            <option value="III|0.89|Perburuan">Perburuan</option>
+            <option value="III|0.89|Pemeliharaan ikan tawar">Pemeliharaan Ikan Tawar</option>
+            <option value="III|0.89|Pemeliharaan ikan laut">Pemeliharaan Ikan Laut</option>
+            <option value="III|0.89|Penangkapan ikan tawar">Penangkapan Ikan Tawar</option>
+            <option value="III|0.89|Pemotongan hewan">Pemotongan Hewan</option>
+            <option value="III|0.89|Pemotongan dan pengawetan daging">Pemotongan dan Pengawetan Daging</option>
+            <option value="III|0.89|Pengolahan susu dan mentega">Pengolahan Susu dan Mentega</option>
+            <option value="III|0.89|Pabrik pengawetan sayuran dan buah">Pabrik Pengawetan Sayuran dan Buah</option>
+            <option value="III|0.89|Pabrik pengawetan ikan">Pabrik Pengawetan Ikan</option>
+            <option value="III|0.89|Penggilingan padi">Penggilingan Padi</option>
+            <option value="III|0.89|Pabrik tepung">Pabrik Tepung (beras, tapioka, dll)</option>
+            <option value="III|0.89|Perusahaan pengupasan kacang tanah">Perusahaan Pengupasan (kacang tanah, dll)</option>
+            <option value="III|0.89|Pabrik roti dan kue">Pabrik Roti dan Kue</option>
+            <option value="III|0.89|Pabrik biskuit">Pabrik Biskuit</option>
+            <option value="III|0.89|Pabrik gula">Pabrik Gula</option>
+            <option value="III|0.89|Pabrik kembang gula, coklat">Pabrik Kembang Gula, Coklat</option>
+            <option value="III|0.89|Pabrik mie dan bihun">Pabrik Mie dan Bihun</option>
+            <option value="III|0.89|Pabrik kerupuk">Pabrik Kerupuk</option>
+            <option value="III|0.89|Pabrik tahu">Pabrik Tahu</option>
+            <option value="III|0.89|Pabrik kecap">Pabrik Kecap</option>
+            <option value="III|0.89|Pabrik es">Pabrik Es</option>
+            <option value="III|0.89|Pabrik margarin, minyak goreng, dan lemak">Pabrik Margarin, Minyak Goreng, dan Lemak</option>
+            <option value="III|0.89|Industri makanan lainnya">Industri Makanan Lainnya</option>
+            <option value="III|0.89|Pabrik minuman dan alkohol">Pabrik Minuman dan Alkohol</option>
+            <option value="III|0.89|Pabrik anggur">Pabrik Anggur</option>
+            <option value="III|0.89|Pabrik bir">Pabrik Bir</option>
+            <option value="III|0.89|Pabrik air soda, sari buah, dan minuman">Pabrik Air Soda, Sari Buah, dan Minuman</option>
+            <option value="III|0.89|Pabrik pemintalan">Pabrik Pemintalan</option>
+            <option value="III|0.89|Pemintalan tali sepatu dan perban">Pemintalan Tali Sepatu dan Perban</option>
+            <option value="III|0.89|Pertenunan">Pertenunan</option>
+            <option value="III|0.89|Permadani">Permadani</option>
+            <option value="III|0.89|Pabrik kaos, kaos kaki, dan pabrik rajut">Pabrik Kaos, Kaos Kaki, dan Pabrik Rajut</option>
+            <option value="III|0.89|Pabrik tali temali">Pabrik Tali Temali (kabel, pukat, rami, sabut)</option>
+            <option value="III|0.89|Industri tekstil lainnya">Industri Tekstil Lainnya</option>
+            <option value="III|0.89|Pabrik keperluan kaki">Pabrik Keperluan Kaki (sepatu, sandal, plastik)</option>
+            <option value="III|0.89|Reparasi barang-barang keperluan kaki">Reparasi Barang-Barang Keperluan Kaki</option>
+            <option value="III|0.89|Pabrik kayu gabus">Pabrik Kayu Gabus</option>
+            <option value="III|0.89|Penggergajian kayu">Penggergajian Kayu</option>
+            <option value="III|0.89|Pabrik peti dan gentong kayu">Pabrik Peti dan Gentong Kayu</option>
+            <option value="III|0.89|Pembikinan barang-barang kayu lainnya">Pembikinan Barang-Barang Kayu Lainnya (triplek)</option>
+            <option value="III|0.89|Pembikinan meubel dari rotan dan bambu">Pembikinan Meubel dari Rotan dan Bambu</option>
+            <option value="III|0.89|Pabrik meubel dari kayu dan bahan-bahan lainnya">Pabrik Meubel dari Kayu dan Bahan Lainnya</option>
+            <option value="III|0.89|Pabrik kertas koran dan karton">Pabrik Kertas Koran dan Karton</option>
+            <option value="III|0.89|Pabrik barang-barang dari kertas koran dan karton">Pabrik Barang-Barang dari Kertas dan Karton</option>
+            <option value="III|0.89|Perusahaan percetakan dan penerbitan">Perusahaan Percetakan dan Penerbitan</option>
+            <option value="III|0.89|Penyamakan kulit dan pekerjaan lanjutan">Penyamakan Kulit dan Pekerjaan Lanjutan</option>
+            <option value="III|0.89|Pabrik barang dari kulit">Pabrik Barang dari Kulit (kopor, tas, dll)</option>
+            <option value="III|0.89|Remiling karet">Remiling Karet</option>
+            <option value="III|0.89|Pabrik barang-barang dari karet">Pabrik Barang-Barang dari Karet (ban, mainan, dll)</option>
+            <option value="III|0.89|Perusahaan vulkanisir">Perusahaan Vulkanisir</option>
+            <option value="III|0.89|Pabrik garam">Pabrik Garam</option>
+            <option value="III|0.89|Pabrik zat asam arang dan sejenisnya">Pabrik Zat Asam Arang dan Sejenisnya</option>
+            <option value="III|0.89|Industri kimia pokok lainnya">Industri Kimia Pokok Lainnya (celupan warna, sintetis)</option>
+            <option value="III|0.89|Terpentin dan damar">Terpentin dan Damar</option>
+            <option value="III|0.89|Industri minyak kelapa">Industri Minyak Kelapa</option>
+            <option value="III|0.89|Industri minyak kelapa sawit">Industri Minyak Kelapa Sawit</option>
+            <option value="III|0.89|Industri minyak dan gemuk dari tumbuh-tumbuhan">Industri Minyak dan Gemuk dari Tumbuh-Tumbuhan</option>
+            <option value="III|0.89|Minyak dan gemuk dari hewan">Minyak dan Gemuk dari Hewan</option>
+            <option value="III|0.89|Pabrik sabun">Pabrik Sabun</option>
+            <option value="III|0.89|Pabrik obat-obatan/farmasi">Pabrik Obat-Obatan / Farmasi</option>
+            <option value="III|0.89|Pabrik wangi-wangian dan kecantikan/kosmetik">Pabrik Wangi-Wangian dan Kosmetik</option>
+            <option value="III|0.89|Pabrik barang-barang untuk mengkilap">Pabrik Barang-Barang untuk Mengkilap</option>
+            <option value="III|0.89|Pabrik kimia lainnya">Pabrik Kimia Lainnya (lilin, obat nyamuk, pestisida)</option>
+            <option value="III|0.89|Cokes oven distribusi gas">Cokes Oven (Distribusi Gas)</option>
+            <option value="III|0.89|Pabrik bahan bangunan dari tanah liat">Pabrik Bahan Bangunan dari Tanah Liat</option>
+            <option value="III|0.89|Pabrik gelas dan barang-barang dari gelas">Pabrik Gelas dan Barang-Barang dari Gelas</option>
+            <option value="III|0.89|Pabrik barang-barang dari tanah liat dan porselin">Pabrik Barang-Barang dari Tanah Liat dan Porselin</option>
+            <option value="III|0.89|Pabrik semen kelompok III">Pabrik Semen</option>
+            <option value="III|0.89|Pembakaran gamping">Pembakaran Gamping</option>
+            <option value="III|0.89|Pabrik tegel, ubin, pipa beton">Pabrik Tegel, Ubin, Pipa Beton</option>
+            <option value="III|0.89|Pabrik pengecoran besi dan pembuatan baja kelompok III">Pabrik Pengecoran Besi dan Pembuatan Baja</option>
+            <option value="III|0.89|Pabrik barang-barang dari logam">Pabrik Barang-Barang dari Logam (batangan, kisi-kisi, pipa)</option>
+            <option value="III|0.89|Pabrik timbangan">Pabrik Timbangan</option>
+            <option value="III|0.89|Pabrik klise dan huruf cetak">Pabrik Klise dan Huruf Cetak</option>
+            <option value="III|0.89|Pabrik galvanisir">Pabrik Galvanisir (partikel)</option>
+            <option value="III|0.89|Pabrik barang-barang logam lainnya">Pabrik Barang-Barang Logam Lainnya</option>
+            <option value="III|0.89|Pabrik dan reparasi mesin-mesin listrik">Pabrik dan Reparasi Mesin-Mesin Listrik</option>
+            <option value="III|0.89|Pembikinan dan reparasi kapal dari kayu">Pembikinan dan Reparasi Kapal dari Kayu</option>
+            <option value="III|0.89|Reparasi sepeda dan becak">Reparasi Sepeda dan Becak</option>
+            <option value="III|0.89|Perusahaan optik">Perusahaan Optik</option>
+            <option value="III|0.89|Industri arloji dan lonceng">Industri Arloji dan Lonceng</option>
+            <option value="III|0.89|Perusahaan perak">Perusahaan Perak</option>
+            <option value="III|0.89|Industri barang-barang dari logam mulia">Industri Barang-Barang dari Logam Mulia</option>
+            <option value="III|0.89|Industri-industri lain perusahaan plastik">Industri Lain (plastik, bulu burung, pipa tembakau)</option>
+            <option value="III|0.89|Perusahaan air">Perusahaan Air (pengumpulan, penyaringan, distribusi)</option>
+            <option value="III|0.89|Pembersihan sampah dan kotoran">Pembersihan Sampah dan Kotoran</option>
+            <option value="III|0.89|Jasa pengangkutan ekspedisi laut dan udara">Jasa Pengangkutan (ekspedisi laut dan udara)</option>
+            <option value="III|0.89|Stasiun Pengisian Bahan Bakar Umum SPBU">Stasiun Pengisian Bahan Bakar Umum (SPBU)</option>
+            <option value="III|0.89|Pabrik cat dan lak">Pabrik Cat dan Lak</option>
+            <option value="III|0.89|Pabrik tinta dan lem">Pabrik Tinta dan Lem</option>
+            <option value="III|0.89|Pabrik bata merah dan genteng">Pabrik Bata Merah dan Genteng</option>
+            <option value="III|0.89|Reparasi kendaraan bermotor">Reparasi Kendaraan Bermotor (mobil, truk, sepeda motor)</option>
+          </optgroup>
+          <optgroup label="⬤ Kelompok IV — Tingkat Risiko Tinggi (JKK: 1.27%)">
+            <option value="IV|1.27|Pabrik dari hasil minyak tanah">Pabrik dari Hasil Minyak Tanah</option>
+            <option value="IV|1.27|Pabrik barang-barang dari minyak tanah atau batu bara">Pabrik Barang-Barang dari Minyak Tanah atau Batu Bara</option>
+            <option value="IV|1.27|Pabrik dan reparasi mesin-mesin bengkel">Pabrik dan Reparasi Mesin-Mesin (bengkel motor, mobil)</option>
+            <option value="IV|1.27|Pembikinan dan reparasi kapal dari baja">Pembikinan dan Reparasi Kapal dari Baja</option>
+            <option value="IV|1.27|Pembikinan dan reparasi alat-alat perhubungan kereta api">Pembikinan dan Reparasi Alat-Alat Perhubungan Kereta Api</option>
+            <option value="IV|1.27|Pabrik kendaraan bermotor dan bagian-bagiannya">Pabrik Kendaraan Bermotor dan Bagian-Bagiannya</option>
+            <option value="IV|1.27|Pabrik dan reparasi kapal udara">Pabrik dan Reparasi Kapal Udara</option>
+            <option value="IV|1.27|Perusahaan kereta api">Perusahaan Kereta Api</option>
+            <option value="IV|1.27|Perusahaan trem dan bus">Perusahaan Trem dan Bus</option>
+            <option value="IV|1.27|Pengangkutan barang dan penumpang di jalan">Pengangkutan Barang dan Penumpang di Jalan (bus, truk, taksi)</option>
+            <option value="IV|1.27|Penimbunan barang/veem">Penimbunan Barang / Veem</option>
+            <option value="IV|1.27|Pengolahan limbah/B3">Pengolahan Limbah / B3</option>
+            <option value="IV|1.27|Perusahaan pengisian bahan bakar gas dan elpiji">Perusahaan Pengisian Bahan Bakar Gas dan Elpiji</option>
+            <option value="IV|1.27|Pabrik alkohol dan spiritus">Pabrik Alkohol dan Spiritus</option>
+            <option value="IV|1.27|Pabrik gas dan yang sejenisnya">Pabrik Gas dan Sejenisnya</option>
+            <option value="IV|1.27|Pabrik semen kelompok IV">Pabrik Semen (Kelompok IV)</option>
+            <option value="IV|1.27|Pabrik pengecoran besi dan pembuatan baja kelompok IV">Pabrik Pengecoran Besi dan Pembuatan Baja (Kelompok IV)</option>
+            <option value="IV|1.27|Perusahaan listrik pembangkit dan distribusi">Perusahaan Listrik (pembangkit, pemindahan, distribusi)</option>
+            <option value="IV|1.27|Pabrik gas distribusi untuk rumah tangga">Pabrik Gas Distribusi untuk Rumah Tangga dan Pabrik</option>
+            <option value="IV|1.27|Industri uap untuk tenaga">Industri Uap untuk Tenaga</option>
+            <option value="IV|1.27|Penangkapan ikan laut">Penangkapan Ikan Laut</option>
+            <option value="IV|1.27|Penangkapan ikan laut lainnya">Penangkapan Ikan Laut Lainnya</option>
+            <option value="IV|1.27|Pengumpulan hasil laut terkecuali ikan">Pengumpulan Hasil Laut (kecuali ikan)</option>
+            <option value="IV|1.27|Lori perkebunan">Lori Perkebunan</option>
+          </optgroup>
+          <optgroup label="⬤ Kelompok V — Tingkat Risiko Sangat Tinggi (JKK: 1.74%)">
+            <option value="V|1.74|Penebangan dan pemotongan kayu/panglong">Penebangan dan Pemotongan Kayu / Panglong</option>
+            <option value="V|1.74|Asam belerang">Asam Belerang</option>
+            <option value="V|1.74|Pabrik pupuk">Pabrik Pupuk</option>
+            <option value="V|1.74|Pabrik kaleng">Pabrik Kaleng</option>
+            <option value="V|1.74|Perbaikan rumah jalan konstruksi berat">Perbaikan Rumah, Jalan, Konstruksi Berat, Pipa Air, Jembatan, Instalasi Listrik</option>
+            <option value="V|1.74|Pengangkutan barang dan penumpang di laut">Pengangkutan Barang dan Penumpang di Laut</option>
+            <option value="V|1.74|Pengangkutan barang dan penumpang di udara">Pengangkutan Barang dan Penumpang di Udara</option>
+            <option value="V|1.74|Pabrik korek api">Pabrik Korek Api</option>
+            <option value="V|1.74|Pertambangan minyak mentah dan gas bumi migas">Pertambangan Minyak Mentah dan Gas Bumi (Migas)</option>
+            <option value="V|1.74|Penggalian batu">Penggalian Batu</option>
+            <option value="V|1.74|Penggalian tanah liat">Penggalian Tanah Liat</option>
+            <option value="V|1.74|Penggalian pasir">Penggalian Pasir</option>
+            <option value="V|1.74|Penggalian gamping">Penggalian Gamping</option>
+            <option value="V|1.74|Penggalian belerang">Penggalian Belerang</option>
+            <option value="V|1.74|Tambang intan dan batu perhiasan">Tambang Intan dan Batu Perhiasan</option>
+            <option value="V|1.74|Pertambangan lainnya">Pertambangan Lainnya</option>
+            <option value="V|1.74|Tambang emas dan perak">Tambang Emas dan Perak</option>
+            <option value="V|1.74|Penghasilan batu bara">Penghasilan Batu Bara</option>
+            <option value="V|1.74|Tambang besi mentah">Tambang Besi Mentah</option>
+            <option value="V|1.74|Tambang timah">Tambang Timah</option>
+            <option value="V|1.74|Tambang bauksit">Tambang Bauksit</option>
+            <option value="V|1.74|Tambang mangan">Tambang Mangan</option>
+            <option value="V|1.74|Tambang logam lainnya">Tambang Logam Lainnya</option>
+            <option value="V|1.74|Pabrik bahan peledak, bahan petasan, dan kembang api">Pabrik Bahan Peledak, Petasan, dan Kembang Api</option>
+          </optgroup>
         </select>
+        <div id="jenisUsahaInfo" class="jenis-usaha-info" style="display:none"></div>
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2: PENGATURAN PERSENTASE IURAN -->
   <section class="card section-iuran-setting" id="section-setting">
     <div class="card-header-row">
       <div class="step-badge">2</div>
@@ -68,7 +343,7 @@
     <div class="iuran-rate-grid">
       <div class="rate-card rate-jkk">
         <div class="rate-icon">🦺</div>
-        <div class="rate-info"><span class="rate-label">JKK — Jaminan Kecelakaan Kerja</span><span class="rate-sub">Perlindungan risiko kecelakaan saat bekerja</span></div>
+        <div class="rate-info"><span class="rate-label">JKK — Jaminan Kecelakaan Kerja</span><span class="rate-sub">Otomatis sesuai kelompok risiko jenis usaha</span></div>
         <div class="rate-input-wrap"><input type="number" id="rateJKK" value="0.24" step="0.01" min="0" max="100" /><span class="rate-unit">%</span></div>
       </div>
       <div class="rate-card rate-jkm">
@@ -81,13 +356,20 @@
         <div class="rate-info"><span class="rate-label">JHT — Jaminan Hari Tua</span><span class="rate-sub">Tabungan hari tua saat berhenti/pensiun</span></div>
         <div class="rate-input-wrap"><input type="number" id="rateJHT" value="5.70" step="0.01" min="0" max="100" /><span class="rate-unit">%</span></div>
       </div>
+      <div class="rate-card rate-jp">
+        <div class="rate-icon">👴</div>
+        <div class="rate-info"><span class="rate-label">JP — Jaminan Pensiun</span><span class="rate-sub">Iuran 3% dari upah (PP 45/2015)</span></div>
+        <div class="rate-input-wrap"><input type="number" id="rateJP" value="3.00" step="0.01" min="0" max="100" /><span class="rate-unit">%</span></div>
+      </div>
     </div>
     <div class="total-rate-display">
       <span>Total Iuran Per Orang:</span>
-      <span id="totalRateDisplay" class="total-rate-value">6.24%</span>
+      <span id="totalRateDisplay" class="total-rate-value">9.24%</span>
       <span class="total-rate-note">dari upah/gaji setiap bulan</span>
     </div>
   </section>
+
+  <!-- SECTION 3: DATA JABATAN -->
   <section class="card section-jabatan" id="section-jabatan">
     <div class="card-header-row">
       <div class="step-badge">3</div>
@@ -120,23 +402,40 @@
       </button>
     </div>
   </section>
+
+  <!-- SECTION 4: UPLOAD FILE LAMPIRAN -->
+  <section class="card section-upload" id="section-upload">
+    <div class="card-header-row">
+      <div class="step-badge">4</div>
+      <div><h2 class="section-title">Lampiran File</h2><p class="section-desc">Upload file pendukung yang akan dicetak bersama laporan PDF (opsional)</p></div>
+    </div>
+    <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+      <div class="upload-icon">📎</div>
+      <p class="upload-text">Klik atau drag &amp; drop file di sini</p>
+      <p class="upload-sub">Mendukung: JPG, PNG, PDF — Bisa lebih dari 1 file</p>
+      <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" style="display:none" onchange="handleFileUpload(this.files)" />
+    </div>
+    <div id="fileList" class="file-list"></div>
+  </section>
+
   <div class="hitung-btn-wrapper">
     <button class="btn btn-hitung" id="btnHitung" onclick="hitungSemua()">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
       Hitung Iuran &amp; Simulasi Manfaat
     </button>
   </div>
+
   <section class="results-section" id="resultsSection" style="display:none">
     <div class="result-summary-grid" id="summaryCards"></div>
     <div class="card result-card" id="rekapCard">
       <div class="card-header-row">
         <div class="result-icon result-icon-blue">📊</div>
-        <div><h2 class="section-title">Rekap Iuran Per Jabatan</h2><p class="section-desc">Rincian iuran JKK + JKM + JHT per jabatan per bulan</p></div>
+        <div><h2 class="section-title">Rekap Iuran Per Jabatan</h2><p class="section-desc">Rincian iuran JKK + JKM + JHT + JP per jabatan per bulan</p></div>
       </div>
       <div class="table-wrapper">
         <table class="result-table" id="rekapTable">
           <thead>
-            <tr><th>No</th><th>Jabatan</th><th>Upah/Org</th><th>Jml Org</th><th>Total Upah</th><th>JKK (Rp)</th><th>JKM (Rp)</th><th>JHT (Rp)</th><th>Total Iuran (Rp)</th></tr>
+            <tr><th>No</th><th>Jabatan</th><th>Upah/Org</th><th>Jml Org</th><th>Total Upah</th><th>JKK (Rp)</th><th>JKM (Rp)</th><th>JHT (Rp)</th><th>JP (Rp)</th><th>Total Iuran (Rp)</th></tr>
           </thead>
           <tbody id="rekapBody"></tbody>
           <tfoot id="rekapFoot"></tfoot>
@@ -208,6 +507,23 @@
       <p class="jht-note">* Pencairan saat berhenti kerja, habis kontrak, atau pengangkatan</p>
       <div id="jhtSimTable"></div>
     </div>
+    <div class="card result-card manfaat-card manfaat-jp" id="jpCard">
+      <div class="manfaat-header">
+        <div class="manfaat-badge-big badge-jp">JP</div>
+        <div><h2 class="section-title">Jaminan Pensiun (JP)</h2><p class="section-desc">PP 45 Tahun 2015 — Manfaat pensiun bulanan setelah usia 57 tahun</p></div>
+      </div>
+      <div class="manfaat-grid manfaat-grid-single">
+        <div class="manfaat-group">
+          <h3 class="manfaat-group-title">👴 Iuran &amp; Manfaat JP</h3>
+          <div class="manfaat-item"><span>Iuran JP</span><span class="val accent-jp font-bold" id="jpRateDisplay">3.00% dari Upah</span></div>
+          <div class="manfaat-item"><span>Usia Pensiun</span><span class="val">57 Tahun</span></div>
+          <div class="manfaat-item"><span>Masa Iuran Minimum</span><span class="val">15 Tahun</span></div>
+          <div class="manfaat-item"><span>Batas Upah Pensiun</span><span class="val">Rp 9.559.600 / bulan (2024)</span></div>
+          <div class="manfaat-item highlight-item"><span>Total Iuran JP per Bulan (seluruh pekerja)</span><span class="val accent-jp font-bold" id="jpTotalDisplay">—</span></div>
+          <p class="manfaat-note">* Manfaat pensiun dihitung berdasarkan masa iuran dan upah rata-rata, dibayarkan bulanan setelah pensiun</p>
+        </div>
+      </div>
+    </div>
     <div class="pdf-btn-wrapper">
       <button class="btn btn-pdf" id="btnPDF" onclick="downloadPDF()">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
@@ -227,6 +543,134 @@
 <footer class="site-footer">
   <p>Simulasi ini bersifat informatif berdasarkan PP 44/2015 &amp; PP 82/2019. Untuk informasi resmi kunjungi <strong>bpjsketenagakerjaan.go.id</strong></p>
 </footer>
-<script src="app.js"></script>
+</div><!-- end #page-kalkulator -->
+
+<!-- ==================== HALAMAN KALKULATOR BPU ==================== -->
+<div id="page-bpu" style="display:none">
+<header class="site-header">
+  <div class="header-bg-shapes"><div class="shape shape-1"></div><div class="shape shape-2"></div><div class="shape shape-3"></div></div>
+  <div class="header-content">
+    <div class="logo-area">
+      <button class="btn-kembali" onclick="kembali()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Kembali
+      </button>
+      <div style="display:flex; gap:15px; margin-right:1.5rem;">
+        <div class="logo-icon">
+          <img src="logo-bpjs.png?v=2" alt="Logo BPJS Ketenagakerjaan" />
+        </div>
+        <div class="logo-icon">
+          <img src="logo-simtek.png" alt="Logo SIMTEK" />
+        </div>
+      </div>
+      <div class="logo-text">
+        <span class="logo-sub">Simulasi Iuran — Program <strong>BPU</strong></span>
+      </div>
+    </div>
+    <div class="header-badges">
+      <span class="badge badge-jkk">JKK</span>
+      <span class="badge badge-jkm">JKM</span>
+      <span class="badge badge-jht">JHT</span>
+    </div>
+  </div>
+  <div class="header-hero-text">
+    <h1>Kalkulator Mandiri BPU<br/><span class="gradient-text">BPJAMSOSTEK</span></h1>
+    <p>Hitung iuran individu (pekerja mandiri, wirausaha, freelancer). Perlindungan JKK (1%), JKM (Rp6.800), JHT (2%).</p>
+  </div>
+</header>
+<main class="main-container">
+  <section class="card section-info" id="section-bpu-info">
+    <div class="card-header-row">
+      <div class="step-badge">1</div>
+      <div><h2 class="section-title">Informasi Individu (BPU)</h2><p class="section-desc">Masukkan data diri dan pekerjaan Anda</p></div>
+    </div>
+    <div class="form-grid form-grid-3">
+      <div class="form-group">
+        <label for="bpuNIK">NIK (Nomor Induk Kependudukan)</label>
+        <input type="text" id="bpuNIK" placeholder="Masukkan NIK 16 digit" />
+      </div>
+      <div class="form-group">
+        <label for="bpuHP">No. Handphone</label>
+        <input type="text" id="bpuHP" placeholder="Contoh: 081234567890" />
+      </div>
+      <div class="form-group">
+        <label for="bpuUpah">Penghasilan / Upah per Bulan (Rp)</label>
+        <input type="number" id="bpuUpah" placeholder="Contoh: 3000000" min="0" step="50000" />
+      </div>
+      <div class="form-group">
+        <label for="bpuBulan">Jumlah Bulan Iuran Dibayarkan</label>
+        <select id="bpuBulan">
+          <option value="1">1 Bulan</option>
+          <option value="2">2 Bulan</option>
+          <option value="3">3 Bulan</option>
+          <option value="6">6 Bulan</option>
+          <option value="12">12 Bulan</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="bpuPekerjaan1">Jenis Pekerjaan Satu</label>
+        <select id="bpuPekerjaan1">
+          <option value="" disabled selected>-- Pilih Pekerjaan 1 --</option>
+          <!-- Options populated by JS -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="bpuPekerjaan2">Jenis Pekerjaan Dua (Opsional)</label>
+        <select id="bpuPekerjaan2">
+          <option value="" selected>-- Pilih Pekerjaan 2 (Jika Ada) --</option>
+          <!-- Options populated by JS -->
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="card section-upload" id="section-bpu-upload">
+    <div class="card-header-row">
+      <div class="step-badge">2</div>
+      <div><h2 class="section-title">Lampiran File</h2><p class="section-desc">Upload file pendukung yang akan dicetak bersama laporan PDF BPU</p></div>
+    </div>
+    <div class="upload-area" onclick="document.getElementById('bpuFileInput').click()">
+      <div class="upload-icon">📎</div>
+      <p class="upload-text">Klik atau drag &amp; drop file di sini</p>
+      <p class="upload-sub">Mendukung: JPG, PNG — Bisa lebih dari 1 file</p>
+      <input type="file" id="bpuFileInput" multiple accept=".jpg,.jpeg,.png" style="display:none" onchange="handleFileUploadBPU(this.files)" />
+    </div>
+    <div id="bpuFileList" class="file-list"></div>
+  </section>
+
+  <div class="hitung-btn-wrapper">
+    <button class="btn btn-hitung" id="btnHitungBpu" onclick="hitungBPU()">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+      Hitung Iuran BPU
+    </button>
+  </div>
+
+  <section class="results-section" id="resultsSectionBPU" style="display:none">
+    <div class="result-summary-grid" id="summaryCardsBPU">
+      <!-- Injected by JS -->
+    </div>
+    
+    <div class="pdf-btn-wrapper" style="margin-top: 30px;">
+      <button class="btn btn-pdf" id="btnPDFBpu" onclick="downloadPDFBpu()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Download Laporan PDF BPU
+      </button>
+      <button class="btn btn-outline" onclick="window.print()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Cetak Halaman
+      </button>
+      <button class="btn btn-ghost" onclick="resetFormBPU()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.65"/></svg>
+        Reset Form
+      </button>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <p>Simulasi BPU ini bersifat informatif. Untuk pendaftaran resmi kunjungi <strong>bpjsketenagakerjaan.go.id</strong></p>
+</footer>
+</div><!-- end #page-bpu -->
+
+<script src="app.js?v=3"></script>
 </body>
 </html>
