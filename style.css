@@ -964,3 +964,176 @@ tfoot td {
   padding: 0.25rem; border-radius: var(--radius-sm);
 }
 .file-remove:hover { background: rgba(239, 68, 68, 0.1); }
+
+/* ==================== JAKON STYLES ==================== */
+.program-jakon .program-card-title { color: #22c55e; }
+.program-jakon:hover { border-color: #22c55e; }
+.program-jakon .program-card-badge { background: rgba(34,197,94,0.1); color: #22c55e; border-color: rgba(34,197,94,0.2); }
+
+.result-icon-blue {
+  color: var(--primary-color);
+  background: var(--primary-bg);
+}
+
+.tfoot-total td {
+  background: rgba(0,0,0,0.25);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.font-bold { font-weight: 700; }
+
+/* ==================== FORMULIR DOWNLOAD SECTION ==================== */
+.formulir-section {
+  max-width: 1100px;
+  margin: 0 auto 2.5rem;
+  padding: 0 1.5rem;
+}
+
+.formulir-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.formulir-section-desc {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 1.75rem;
+}
+
+.formulir-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.formulir-group {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.formulir-group:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+
+.formulir-group-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+/* Per-program accent borders */
+.formulir-pu { border-top: 3px solid var(--primary-color); }
+.formulir-bpu { border-top: 3px solid var(--jkm-color); }
+.formulir-jakon { border-top: 3px solid var(--jht-color); }
+
+.formulir-pu .formulir-group-title { color: var(--primary-color); }
+.formulir-bpu .formulir-group-title { color: var(--jkm-color); }
+.formulir-jakon .formulir-group-title { color: var(--jht-color); }
+
+.formulir-group-icon { font-size: 1.75rem; }
+
+.formulir-group-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.formulir-group-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.formulir-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+}
+
+.formulir-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.7rem 1.25rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.formulir-item:last-child { border-bottom: none; }
+
+.formulir-item:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.formulir-item-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+.formulir-item-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.formulir-item-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.formulir-item-desc {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.formulir-item-dl {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  transition: background 0.15s, color 0.15s;
+}
+
+.formulir-item:hover .formulir-item-dl {
+  background: rgba(14,165,233,0.15);
+  color: var(--primary-color);
+}
+
+.formulir-pu .formulir-item:hover .formulir-item-dl { color: var(--primary-color); background: var(--primary-bg); }
+.formulir-bpu .formulir-item:hover .formulir-item-dl { color: var(--jkm-color); background: var(--jkm-bg); }
+.formulir-jakon .formulir-item:hover .formulir-item-dl { color: var(--jht-color); background: var(--jht-bg); }
+
+@media (max-width: 900px) {
+  .formulir-grid { grid-template-columns: 1fr; }
+}

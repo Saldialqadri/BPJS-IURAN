@@ -26,12 +26,20 @@ function showProgram(prog) {
     document.getElementById('page-welcome').style.display = 'none';
     document.getElementById('page-kalkulator').style.display = 'block';
     document.getElementById('page-bpu').style.display = 'none';
+    document.getElementById('page-jakon').style.display = 'none';
     document.getElementById('programLabel').textContent = 'PU (Penerima Upah)';
     window.scrollTo(0, 0);
   } else if (prog === 'BPU') {
     document.getElementById('page-welcome').style.display = 'none';
     document.getElementById('page-kalkulator').style.display = 'none';
+    document.getElementById('page-jakon').style.display = 'none';
     document.getElementById('page-bpu').style.display = 'block';
+    window.scrollTo(0, 0);
+  } else if (prog === 'JAKON') {
+    document.getElementById('page-welcome').style.display = 'none';
+    document.getElementById('page-kalkulator').style.display = 'none';
+    document.getElementById('page-bpu').style.display = 'none';
+    document.getElementById('page-jakon').style.display = 'block';
     window.scrollTo(0, 0);
   }
 }
@@ -39,6 +47,7 @@ function showProgram(prog) {
 function kembali() {
   document.getElementById('page-kalkulator').style.display = 'none';
   document.getElementById('page-bpu').style.display = 'none';
+  document.getElementById('page-jakon').style.display = 'none';
   document.getElementById('page-welcome').style.display = 'flex';
   window.scrollTo(0, 0);
 }
@@ -880,6 +889,58 @@ function downloadPDFBpu() {
   doc.text('* Simulasi BPU menggunakan tarif khusus pekerja mandiri.', ML, y);
   doc.text('* Iuran dibayarkan paling lambat tanggal 15 bulan berikutnya untuk menghindari denda.', ML, y+4);
 
+  // ── MANFAAT BPU ──
+  doc.addPage();
+  drawHeaderBPU();
+  let my = 20;
+  doc.setFillColor(0,52,105); doc.rect(ML, my, CW, 7, 'F');
+  doc.setTextColor(255,255,255); doc.setFontSize(8); doc.setFont('helvetica','bold');
+  doc.text('RINGKASAN MANFAAT BPU', ML+4, my+4.7); my+=10;
+
+  // Manfaat JKK
+  doc.autoTable({startY:my,margin:{left:ML,right:MR},
+    head:[['JAMINAN KECELAKAAN KERJA (JKK)','Ketentuan / Nominal']],
+    body:[
+      ['Perawatan & Pengobatan','Kelas 1 Rumah Sakit Pemerintah / Swasta (Tanpa Batas Biaya)'],
+      ['Santunan Kematian KK',`48 x Upah Dilaporkan (${formatRp(d.upah)})`],
+      ['Cacat Total Tetap',`56 x Upah Dilaporkan (${formatRp(d.upah)})`],
+      ['Biaya Transportasi','Darat: Rp 5 Jt, Laut: Rp 2 Jt, Udara: Rp 10 Jt'],
+      ['STMB (Sementara Tidak Mampu Bekerja)','100% Upah untuk 12 bln pertama, 50% hingga sembuh'],
+      ['Beasiswa (Maks. 2 Anak)','Maksimal Rp 174.000.000']
+    ],
+    theme:'grid', styles:{font:'helvetica',fontSize:7,cellPadding:3,textColor:[30,30,30]},
+    headStyles:{fillColor:[249,115,22],textColor:[255,255,255],fontStyle:'bold'}
+  });
+  my = doc.lastAutoTable.finalY+5;
+
+  // Manfaat JKM
+  doc.autoTable({startY:my,margin:{left:ML,right:MR},
+    head:[['JAMINAN KEMATIAN (JKM)','Ketentuan / Nominal']],
+    body:[
+      ['Santunan Kematian sekaligus','Rp 20.000.000'],
+      ['Biaya Pemakaman','Rp 10.000.000'],
+      ['Santunan Berkala (sekaligus)','Rp 12.000.000'],
+      ['TOTAL SANTUNAN KEMATIAN','Rp 42.000.000'],
+      ['Beasiswa (Maks. 2 Anak)','Maks. Rp 174.000.000 (Min. kepesertaan 3 thn)']
+    ],
+    theme:'grid', styles:{font:'helvetica',fontSize:7,cellPadding:3,textColor:[30,30,30]},
+    headStyles:{fillColor:[168,85,247],textColor:[255,255,255],fontStyle:'bold'}
+  });
+  my = doc.lastAutoTable.finalY+5;
+
+  // Manfaat JHT
+  doc.autoTable({startY:my,margin:{left:ML,right:MR},
+    head:[['JAMINAN HARI TUA (JHT)','Ketentuan']],
+    body:[
+      ['Iuran JHT Bulanan','2% dari Upah Dilaporkan'],
+      ['Ketentuan Pencairan Penuh','Saat usia mencapai 56 tahun, cacat total tetap, atau meninggal dunia'],
+      ['Ketentuan Pencairan Sebagian','10% untuk persiapan pensiun, 30% untuk perumahan (syarat min. 10 thn)'],
+      ['Nilai Manfaat','Akumulasi seluruh iuran JHT beserta hasil pengembangan dari BPJS']
+    ],
+    theme:'grid', styles:{font:'helvetica',fontSize:7,cellPadding:3,textColor:[30,30,30]},
+    headStyles:{fillColor:[34,197,94],textColor:[255,255,255],fontStyle:'bold'}
+  });
+
   // ── ATTACHMENTS ──
   if (bpuUploadedFiles.length > 0) {
     for (let i = 0; i < bpuUploadedFiles.length; i++) {
@@ -916,4 +977,318 @@ function downloadPDFBpu() {
 
   doc.save(`Simulasi_BPJS_BPU_${d.nik}.pdf`);
 }
+
+// ================================================================
+// LOGIKA JAKON (Jasa Konstruksi)
+// ================================================================
+let jakonUploadedFiles = [];
+
+function handleFileUploadJakon(files) {
+  if (!files || files.length === 0) return;
+  const listEl = document.getElementById('jakonFileList');
+  
+  Array.from(files).forEach(file => {
+    const isImage = file.type.startsWith('image/');
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    const id = 'jakon_file_' + Date.now() + Math.floor(Math.random() * 1000);
+    item.id = id;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      jakonUploadedFiles.push({ id, name: file.name, type: file.type, size: file.size, data: dataUrl, isImage });
+      const kb = Math.round(file.size / 1024);
+      let previewHtml = isImage ? `<img src="${dataUrl}" alt="Preview" />` : 'PDF';
+      
+      item.innerHTML = `
+        <div class="file-info"><div class="file-preview">${previewHtml}</div><div><div class="file-name">${file.name}</div><div class="file-size">${kb} KB</div></div></div>
+        <button class="file-remove" onclick="removeFileJakon('${id}')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      `;
+      listEl.appendChild(item);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function removeFileJakon(id) {
+  document.getElementById(id)?.remove();
+  jakonUploadedFiles = jakonUploadedFiles.filter(f => f.id !== id);
+}
+
+function onJakonCaraBayarChange() {
+  // Can be used to dynamically show/hide sections before hitting 'Hitung'. 
+  // Currently handled upon 'Hitung'.
+}
+
+function hitungJakon() {
+  const nmProyek = document.getElementById('jakonNamaProyek').value.trim() || '-';
+  const valBruto = parseNum(document.getElementById('jakonNilai').value);
+  const caraBayar = document.getElementById('jakonCaraBayar').value;
+
+  if (valBruto <= 0) {
+    alert("Nilai Kontrak Bruto harus lebih dari 0!");
+    return;
+  }
+
+  // 1. Hitung Netto (Keluarkan PPN 11%)
+  // The user requested formula: = (Nilai Kontrak / 111) * 100
+  const valNetto = (valBruto / 111) * 100;
+
+  let remaining = valNetto;
+  let totalIuran = 0;
+  
+  const tiers = [];
+  
+  // Tier 1: 0 - 100jt (Limit: 100,000,000)
+  let t1Limit = 100000000;
+  let porsiT1 = Math.min(remaining, t1Limit);
+  let iuranT1 = porsiT1 * 0.0024;
+  if(porsiT1 > 0) {
+    tiers.push({ layer: 'Tier 1', desc: 'Rp 0 s.d. Rp 100 Juta', porsi: porsiT1, rate: '0.24%', val: iuranT1 });
+    totalIuran += iuranT1;
+    remaining -= porsiT1;
+  }
+
+  // Tier 2: >100jt - 500jt (Limit/Range: 400,000,000)
+  let t2Limit = 400000000;
+  let porsiT2 = Math.min(remaining, t2Limit);
+  let iuranT2 = porsiT2 * 0.0019;
+  if(porsiT2 > 0) {
+    tiers.push({ layer: 'Tier 2', desc: '> Rp 100 Juta s.d. Rp 500 Juta', porsi: porsiT2, rate: '0.19%', val: iuranT2 });
+    totalIuran += iuranT2;
+    remaining -= porsiT2;
+  }
+
+  // Tier 3: >500jt - 1M (Limit/Range: 500,000,000)
+  let t3Limit = 500000000;
+  let porsiT3 = Math.min(remaining, t3Limit);
+  let iuranT3 = porsiT3 * 0.0015;
+  if(porsiT3 > 0) {
+    tiers.push({ layer: 'Tier 3', desc: '> Rp 500 Juta s.d. Rp 1 Miliar', porsi: porsiT3, rate: '0.15%', val: iuranT3 });
+    totalIuran += iuranT3;
+    remaining -= porsiT3;
+  }
+
+  // Tier 4: >1M - 5M (Limit/Range: 4,000,000,000)
+  let t4Limit = 4000000000;
+  let porsiT4 = Math.min(remaining, t4Limit);
+  let iuranT4 = porsiT4 * 0.0012;
+  if(porsiT4 > 0) {
+    tiers.push({ layer: 'Tier 4', desc: '> Rp 1 Miliar s.d. Rp 5 Miliar', porsi: porsiT4, rate: '0.12%', val: iuranT4 });
+    totalIuran += iuranT4;
+    remaining -= porsiT4;
+  }
+
+  // Tier 5: >5M
+  let porsiT5 = remaining;
+  let iuranT5 = porsiT5 * 0.0010;
+  if(porsiT5 > 0) {
+    tiers.push({ layer: 'Tier 5', desc: '> Rp 5 Miliar ke atas', porsi: porsiT5, rate: '0.10%', val: iuranT5 });
+    totalIuran += iuranT5;
+  }
+
+  // Generate Table Body
+  const tbody = document.getElementById('jakonBody');
+  tbody.innerHTML = '';
+  tiers.forEach(t => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><strong>${t.layer}</strong></td><td>${t.desc}</td><td style="text-align:right">${formatRp(t.porsi)}</td><td style="text-align:center">${t.rate}</td><td style="text-align:right; font-weight:600;color:var(--primary-color)">${formatRp(t.val)}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  const tfoot = document.getElementById('jakonFoot');
+  tfoot.innerHTML = `
+    <tr class="tfoot-total">
+      <td colspan="2" style="text-align:right;font-weight:700;padding:12px 16px;">TOTAL KONTRAK NETTO & IURAN</td>
+      <td class="font-bold" style="text-align:right">${formatRp(valNetto)}</td>
+      <td></td>
+      <td class="font-bold" style="text-align:right; font-size:1.1rem;color:var(--jkk-color)">${formatRp(totalIuran)}</td>
+    </tr>
+  `;
+
+  // Handle Termin
+  const terminCard = document.getElementById('terminJakonCard');
+  let terminData = [];
+  if(caraBayar === 'Termin') {
+    terminCard.style.display = 'block';
+    const terminBody = document.getElementById('jakonTerminBody');
+    terminData = [
+      { t: 'Termin 1 (Pertama)', pct: '50%', val: totalIuran * 0.50 },
+      { t: 'Termin 2 (Kedua)', pct: '25%', val: totalIuran * 0.25 },
+      { t: 'Termin 3 (Ketiga)', pct: '25%', val: totalIuran * 0.25 }
+    ];
+    terminBody.innerHTML = terminData.map(tm => `
+      <tr><td><strong>${tm.t}</strong></td><td style="text-align:center">${tm.pct}</td><td style="text-align:right; font-weight:700;color:var(--jht-color)">${formatRp(tm.val)}</td></tr>
+    `).join('');
+  } else {
+    terminCard.style.display = 'none';
+  }
+
+  document.getElementById('resultsSectionJakon').style.display = 'block';
+  document.getElementById('resultsSectionJakon').scrollIntoView({behavior:'smooth', block:'start'});
+
+  window._pdfDataJakon = { nmProyek, valBruto, valNetto, tiers, totalIuran, caraBayar, terminData };
+}
+
+function resetFormJakon() {
+  if(!confirm('Reset form JAKON?')) return;
+  document.getElementById('jakonNamaProyek').value = '';
+  document.getElementById('jakonNilai').value = '';
+  document.getElementById('jakonCaraBayar').value = 'Sekaligus';
+  document.getElementById('resultsSectionJakon').style.display = 'none';
+  document.getElementById('jakonFileList').innerHTML = '';
+  jakonUploadedFiles = [];
+  window._pdfDataJakon = null;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function downloadPDFJakon() {
+  const d = window._pdfDataJakon;
+  if(!d) { alert('Silakan klik Hitung terlebih dahulu!'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight();
+  const ML=14, MR=14, CW=W-ML-MR;
+
+  function drawHeaderJakon(){
+    doc.setFillColor(34,197,94);doc.rect(0,0,W,14,'F');
+    doc.setFillColor(21,128,61);doc.rect(0,12.5,W,1.5,'F');
+    doc.setTextColor(255,255,255);doc.setFontSize(8.5);doc.setFont('helvetica','bold');
+    doc.text('SIMULASI IURAN JASA KONSTRUKSI (JAKON)',ML,9.5);
+  }
+
+  drawHeaderJakon(); let y=18;
+  doc.setFillColor(20,83,45);doc.roundedRect(ML,y,CW,26,3,3,'F');
+  doc.setFillColor(34,197,94);doc.roundedRect(ML,y,4,26,2,2,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(13);doc.setFont('helvetica','bold');
+  doc.text('LAPORAN IURAN PROYEK KONSTRUKSI (JAKON)',ML+10,y+9);
+  doc.setFontSize(9);doc.text('Perhitungan Berdasarkan Aturan Tiering (Tarif Progresif Berjenjang)',ML+10,y+17);
+  doc.setFontSize(7);doc.setFont('helvetica','normal');doc.setTextColor(180,240,190);
+  doc.text('Jaminan Kecelakaan Kerja (JKK) dan Jaminan Kematian (JKM)',ML+10,y+23);
+  y+=30;
+
+  doc.setFillColor(240,253,244);doc.roundedRect(ML,y,CW,21,2,2,'F');
+  doc.setDrawColor(187,247,208);doc.setLineWidth(0.3);doc.roundedRect(ML,y,CW,21,2,2,'S');doc.setLineWidth(0.2);
+  [['Nama Proyek', d.nmProyek],['Cara Pembayaran', d.caraBayar],['Nilai Kontrak Bruto (Termasuk PPN)', formatRp(d.valBruto)],['Nilai Kontrak Netto (Dasar Perhitungan)', formatRp(d.valNetto)]].forEach(([k,v],i)=>{
+    const col=i%2,row=Math.floor(i/2),ix=ML+5+col*(CW/2),iy=y+6+row*10;
+    doc.setTextColor(100,160,120);doc.setFontSize(5.5);doc.setFont('helvetica','normal');doc.text(k.toUpperCase(),ix,iy);
+    doc.setTextColor(20,70,40);doc.setFontSize(8);doc.setFont('helvetica','bold');doc.text(v,ix,iy+4.5);
+  });
+  y+=27;
+
+  doc.setFillColor(34,197,94);doc.rect(ML,y,CW,7,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(7.5);doc.setFont('helvetica','bold');
+  doc.text('RINCIAN TIERING & IURAN',ML+4,y+4.7);y+=9;
+
+  let tbTier = d.tiers.map(t => [t.layer, t.desc, formatRp(t.porsi), t.rate, formatRp(t.val)]);
+  tbTier.push([{content:'TOTAL KONTRAK NETTO & IURAN',styles:{fontStyle:'bold',fillColor:[230,250,235],colSpan:2}}, {content:formatRp(d.valNetto),styles:{fontStyle:'bold',fillColor:[230,250,235]}}, {content:'',styles:{fillColor:[230,250,235]}}, {content:formatRp(d.totalIuran),styles:{fontStyle:'bold',fillColor:[230,250,235]}}]);
+
+  doc.autoTable({startY:y,margin:{left:ML,right:MR},
+    head:[['Lapisan','Rentang Kontrak','Porsi Nilai Netto','Rate','Jumlah Iuran']],
+    body:tbTier,theme:'grid',
+    styles:{font:'helvetica',fontSize:7,cellPadding:3,lineColor:[200,240,215],lineWidth:0.2,textColor:[25,65,40]},
+    headStyles:{fillColor:[22,163,74],textColor:[255,255,255],fontStyle:'bold',fontSize:7},
+    columnStyles:{2:{halign:'right'},3:{halign:'center'},4:{halign:'right',fontStyle:'bold',textColor:[21,128,61]}}
+  });
+  y=doc.lastAutoTable.finalY+8;
+
+  if (d.caraBayar === 'Termin' && d.terminData.length > 0) {
+    doc.setFillColor(21,128,61);doc.rect(ML,y,CW,7,'F');
+    doc.setTextColor(255,255,255);doc.setFontSize(7.5);doc.setFont('helvetica','bold');
+    doc.text('JADWAL PEMBAYARAN TERMIN',ML+4,y+4.7);y+=9;
+
+    let tbTermin = d.terminData.map(tm => [tm.t, tm.pct, formatRp(tm.val)]);
+    doc.autoTable({startY:y,margin:{left:ML,right:MR},
+      head:[['Tahapan Pembayaran','Persentase Tagihan','Nilai Tagihan Iuran']],
+      body:tbTermin,theme:'grid',
+      styles:{font:'helvetica',fontSize:7,cellPadding:3,lineColor:[200,240,215],lineWidth:0.2,textColor:[25,65,40]},
+      headStyles:{fillColor:[21,128,61],textColor:[255,255,255],fontStyle:'bold',fontSize:7},
+      columnStyles:{1:{halign:'center'},2:{halign:'right',fontStyle:'bold',textColor:[20,83,45]}}
+    });
+    y=doc.lastAutoTable.finalY+8;
+  }
+
+  y+=10;
+  doc.setFontSize(6.5); doc.setTextColor(100,100,100); doc.setFont('helvetica','normal');
+  doc.text('* Simulasi perhitungan di atas belum termasuk biaya administrasi atau denda.', ML, y);
+  doc.text('* Pembayaran dapat dilakukan melalui channel resmi BPJS Ketenagakerjaan.', ML, y+4);
+
+  // ── MANFAAT JAKON ──
+  doc.addPage();
+  drawHeaderJakon();
+  let my = 20;
+  doc.setFillColor(20,83,45); doc.rect(ML, my, CW, 7, 'F');
+  doc.setTextColor(255,255,255); doc.setFontSize(8); doc.setFont('helvetica','bold');
+  doc.text('RINGKASAN MANFAAT JAKON', ML+4, my+4.7); my+=10;
+
+  // Manfaat JKK
+  doc.autoTable({startY:my,margin:{left:ML,right:MR},
+    head:[['JAMINAN KECELAKAAN KERJA (JKK)','Ketentuan / Nominal']],
+    body:[
+      ['Perawatan & Pengobatan','Kelas 1 Rumah Sakit Pemerintah / Swasta (Tanpa Batas Biaya)'],
+      ['Santunan Kematian KK','48 x Upah Terlapor'],
+      ['Cacat Total Tetap','56 x Upah Terlapor'],
+      ['Biaya Transportasi','Darat: Rp 5 Jt, Laut: Rp 2 Jt, Udara: Rp 10 Jt'],
+      ['STMB (Sementara Tidak Mampu Bekerja)','100% Upah untuk 12 bln pertama, 50% hingga sembuh'],
+      ['Beasiswa (Maks. 2 Anak)','Maksimal Rp 174.000.000']
+    ],
+    theme:'grid', styles:{font:'helvetica',fontSize:7,cellPadding:3,textColor:[30,30,30]},
+    headStyles:{fillColor:[249,115,22],textColor:[255,255,255],fontStyle:'bold'}
+  });
+  my = doc.lastAutoTable.finalY+5;
+
+  // Manfaat JKM
+  doc.autoTable({startY:my,margin:{left:ML,right:MR},
+    head:[['JAMINAN KEMATIAN (JKM)','Ketentuan / Nominal']],
+    body:[
+      ['Santunan Kematian sekaligus','Rp 20.000.000'],
+      ['Biaya Pemakaman','Rp 10.000.000'],
+      ['Santunan Berkala (sekaligus)','Rp 12.000.000'],
+      ['TOTAL SANTUNAN KEMATIAN','Rp 42.000.000'],
+      ['Beasiswa (Maks. 2 Anak)','Maks. Rp 174.000.000 (Min. kepesertaan 3 thn)']
+    ],
+    theme:'grid', styles:{font:'helvetica',fontSize:7,cellPadding:3,textColor:[30,30,30]},
+    headStyles:{fillColor:[168,85,247],textColor:[255,255,255],fontStyle:'bold'}
+  });
+
+  // ── ATTACHMENTS ──
+  if (jakonUploadedFiles.length > 0) {
+    for (let i = 0; i < jakonUploadedFiles.length; i++) {
+      const file = jakonUploadedFiles[i];
+      if (file.isImage) {
+        doc.addPage();
+        drawHeaderJakon();
+        
+        doc.setFillColor(245,245,245);
+        doc.rect(ML, 18, CW, 8, 'F');
+        doc.setTextColor(50,50,50);
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.text(`Lampiran Proyek (JAKON): ${file.name}`, ML+2, 23);
+        
+        try {
+          const imgProps = doc.getImageProperties(file.data);
+          const pdfWidth = CW;
+          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+          let finalHeight = pdfHeight, finalWidth = pdfWidth, yPos = 30;
+          if (pdfHeight > H - 45) {
+            finalHeight = H - 45;
+            finalWidth = (imgProps.width * finalHeight) / imgProps.height;
+          }
+          const xOffset = ML + (CW - finalWidth) / 2;
+          const format = file.type === 'image/png' ? 'PNG' : 'JPEG';
+          doc.addImage(file.data, format, xOffset, yPos, finalWidth, finalHeight);
+        } catch (e) {
+          console.error("Gagal merender gambar", e);
+        }
+      }
+    }
+  }
+
+  doc.save(`Simulasi_BPJS_JAKON.pdf`);
+}
+
 

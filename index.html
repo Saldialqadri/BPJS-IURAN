@@ -45,7 +45,7 @@
       <button class="program-card-btn">Mulai Simulasi →</button>
     </div>
     <div class="program-card program-bpu" id="card-bpu" onclick="showProgram('BPU')">
-      <div class="program-card-icon">👤</div>
+      <div class="program-card-icon">🧑‍🌾</div>
       <div class="program-card-badge">Tersedia</div>
       <h2 class="program-card-title">BPU</h2>
       <p class="program-card-sub">Bukan Penerima Upah</p>
@@ -55,18 +55,151 @@
       </div>
       <button class="program-card-btn">Mulai Simulasi →</button>
     </div>
-    <div class="program-card program-jakon program-card-disabled" id="card-jakon">
+    <div class="program-card program-jakon" id="card-jakon" onclick="showProgram('JAKON')">
       <div class="program-card-icon">🏗️</div>
-      <div class="program-card-badge program-badge-soon">Segera Hadir</div>
+      <div class="program-card-badge">Tersedia</div>
       <h2 class="program-card-title">JAKON</h2>
       <p class="program-card-sub">Jasa Konstruksi</p>
       <p class="program-card-desc">Tenaga kerja pada proyek konstruksi dengan iuran dihitung dari nilai kontrak proyek bukan upah.</p>
       <div class="program-card-covers">
         <span>JKK</span><span>JKM</span>
       </div>
-      <button class="program-card-btn program-btn-disabled" disabled>Segera Hadir</button>
+      <button class="program-card-btn">Mulai Simulasi →</button>
     </div>
   </div>
+
+  <!-- ==================== SEKSI UNDUH FORMULIR ==================== -->
+  <div class="formulir-section">
+    <div class="formulir-section-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Unduh Formulir Pendaftaran
+    </div>
+    <p class="formulir-section-desc">Unduh formulir yang dibutuhkan sesuai program kepesertaan Anda</p>
+
+    <div class="formulir-grid">
+
+      <!-- PU -->
+      <div class="formulir-group formulir-pu">
+        <div class="formulir-group-header">
+          <span class="formulir-group-icon">🏢</span>
+          <div>
+            <div class="formulir-group-title">Formulir PU</div>
+            <div class="formulir-group-sub">Penerima Upah</div>
+          </div>
+        </div>
+        <div class="formulir-list">
+          <a href="Formulir_1_BPJS_Ketenagakerjaan.pdf" download class="formulir-item">
+            <span class="formulir-item-icon">📄</span>
+            <div class="formulir-item-info">
+              <span class="formulir-item-name">Formulir 1</span>
+              <span class="formulir-item-desc">Pendaftaran Perusahaan / Instansi</span>
+            </div>
+            <span class="formulir-item-dl">↓</span>
+          </a>
+          <a href="Formulir_1a_BPJS_Ketenagakerjaan.pdf" download class="formulir-item">
+            <span class="formulir-item-icon">📄</span>
+            <div class="formulir-item-info">
+              <span class="formulir-item-name">Formulir 1a</span>
+              <span class="formulir-item-desc">Data Tenaga Kerja / Peserta</span>
+            </div>
+            <span class="formulir-item-dl">↓</span>
+          </a>
+          <a href="Formulir_1b_BPJS_Ketenagakerjaan.pdf" download class="formulir-item">
+            <span class="formulir-item-icon">📄</span>
+            <div class="formulir-item-info">
+              <span class="formulir-item-name">Formulir 1b</span>
+              <span class="formulir-item-desc">Data Keluarga Tenaga Kerja</span>
+            </div>
+            <span class="formulir-item-dl">↓</span>
+          </a>
+          <a href="Formulir_2_BPJS_Ketenagakerjaan.pdf" download class="formulir-item">
+            <span class="formulir-item-icon">📄</span>
+            <div class="formulir-item-info">
+              <span class="formulir-item-name">Formulir 2</span>
+              <span class="formulir-item-desc">Rincian Iuran Tenaga Kerja</span>
+            </div>
+            <span class="formulir-item-dl">↓</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- BPU -->
+      <div class="formulir-group formulir-bpu">
+        <div class="formulir-group-header">
+          <span class="formulir-group-icon">🧑‍🌾</span>
+          <div>
+            <div class="formulir-group-title">Formulir BPU</div>
+            <div class="formulir-group-sub">Bukan Penerima Upah</div>
+          </div>
+        </div>
+        <div class="formulir-list">
+          <a href="Formulir_1a_BPJS_Ketenagakerjaan.pdf" download class="formulir-item">
+            <span class="formulir-item-icon">📄</span>
+            <div class="formulir-item-info">
+              <span class="formulir-item-name">Formulir 1a</span>
+              <span class="formulir-item-desc">Data Peserta Mandiri / BPU</span>
+            </div>
+            <span class="formulir-item-dl">↓</span>
+          </a>
+          <a href="Formulir_1b_BPJS_Ketenagakerjaan.pdf" download class="formulir-item">
+            <span class="formulir-item-icon">📄</span>
+            <div class="formulir-item-info">
+              <span class="formulir-item-name">Formulir 1b</span>
+              <span class="formulir-item-desc">Data Keluarga Peserta BPU</span>
+            </div>
+            <span class="formulir-item-dl">↓</span>
+          </a>
+          <a href="Formulir_2_BPJS_Ketenagakerjaan.pdf" download class="formulir-item">
+            <span class="formulir-item-icon">📄</span>
+            <div class="formulir-item-info">
+              <span class="formulir-item-name">Formulir 2</span>
+              <span class="formulir-item-desc">Rincian Iuran BPU</span>
+            </div>
+            <span class="formulir-item-dl">↓</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- JAKON -->
+      <div class="formulir-group formulir-jakon">
+        <div class="formulir-group-header">
+          <span class="formulir-group-icon">🏗️</span>
+          <div>
+            <div class="formulir-group-title">Formulir JAKON</div>
+            <div class="formulir-group-sub">Jasa Konstruksi</div>
+          </div>
+        </div>
+        <div class="formulir-list">
+          <a href="Formulir_1_Jasa_Konstruksi_BPJS_Ketenagakerjaan.pdf" download class="formulir-item">
+            <span class="formulir-item-icon">📄</span>
+            <div class="formulir-item-info">
+              <span class="formulir-item-name">Formulir 1 Jakon</span>
+              <span class="formulir-item-desc">Data Proyek Konstruksi</span>
+            </div>
+            <span class="formulir-item-dl">↓</span>
+          </a>
+          <a href="Formulir_1a_Jasa_Konstruksi_BPJS_Ketenagakerjaan.pdf" download class="formulir-item">
+            <span class="formulir-item-icon">📄</span>
+            <div class="formulir-item-info">
+              <span class="formulir-item-name">Formulir 1a Jakon</span>
+              <span class="formulir-item-desc">Data Tenaga Kerja Proyek</span>
+            </div>
+            <span class="formulir-item-dl">↓</span>
+          </a>
+          <a href="Formulir_1a1_Jasa_Konstruksi_BPJS_Ketenagakerjaan.pdf" download class="formulir-item">
+            <span class="formulir-item-icon">📄</span>
+            <div class="formulir-item-info">
+              <span class="formulir-item-name">Formulir 1a1 Jakon</span>
+              <span class="formulir-item-desc">Daftar Rincian Tenaga Kerja</span>
+            </div>
+            <span class="formulir-item-dl">↓</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <p class="welcome-footer">Berdasarkan PP 44/2015 &amp; PP 82/2019 | BPJS Ketenagakerjaan</p>
 </div>
 
@@ -461,16 +594,15 @@
         </div>
         <div class="manfaat-group">
           <h3 class="manfaat-group-title">♿ Santunan Kecacatan</h3>
-          <div class="manfaat-item"><span>Cacat Sebagian Anatomi</span><span class="val">% Cacat × 80 × Rp 2.500.000</span></div>
-          <div class="manfaat-item"><span>Cacat Sebagian Fungsi</span><span class="val">% Kurang Fungsi × % Cacat × 80 × Rp 2.500.000</span></div>
-          <div class="manfaat-item highlight-item"><span>Cacat Total Tetap (56 × Rp 2.500.000)</span><span class="val accent-jkk font-bold">Rp 112.000.000</span></div>
+          <div class="manfaat-item"><span>Cacat Sebagian Anatomi</span><span class="val">% Cacat × 80 × Upah Sebulan</span></div>
+          <div class="manfaat-item"><span>Cacat Sebagian Fungsi</span><span class="val">% Kurang Fungsi × % Cacat × 80 × Upah Sebulan</span></div>
+          <div class="manfaat-item highlight-item"><span>Cacat Total Tetap</span><span class="val accent-jkk font-bold">56 × Upah Sebulan</span></div>
         </div>
         <div class="manfaat-group">
           <h3 class="manfaat-group-title">💔 Santunan Kematian Akibat Kecelakaan Kerja</h3>
-          <div class="manfaat-item"><span>Santunan Kematian (48 × Rp 2.500.000)</span><span class="val">Rp 96.000.000</span></div>
+          <div class="manfaat-item"><span>Santunan Kematian KK</span><span class="val accent-jkk font-bold">48 × Upah Sebulan</span></div>
           <div class="manfaat-item"><span>Santunan Pemakaman</span><span class="val">Rp 10.000.000</span></div>
           <div class="manfaat-item"><span>Santunan Berkala (dibayar sekaligus)</span><span class="val">Rp 12.000.000</span></div>
-          <div class="manfaat-item highlight-item"><span>TOTAL Santunan Kematian KK</span><span class="val accent-jkk font-bold">Rp 118.000.000</span></div>
         </div>
         <div class="manfaat-group">
           <h3 class="manfaat-group-title">🎓 Beasiswa (untuk 2 Anak Peserta)</h3>
@@ -650,6 +782,80 @@
       <!-- Injected by JS -->
     </div>
     
+    <!-- MANFAAT BPU -->
+    <div class="card result-card manfaat-card manfaat-jkk">
+      <div class="manfaat-header">
+        <div class="manfaat-badge-big badge-jkk">JKK</div>
+        <div><h2 class="section-title">Jaminan Kecelakaan Kerja (JKK) — BPU</h2><p class="section-desc">PP 44 Tahun 2015 &amp; PP 82 Tahun 2019</p></div>
+      </div>
+      <div class="manfaat-grid">
+        <div class="manfaat-group">
+          <h3 class="manfaat-group-title">🏥 Perawatan &amp; Pengobatan</h3>
+          <div class="manfaat-item"><span>Kelas Perawatan</span><span class="val accent-jkk">Kelas 1 — Tanpa Batas Biaya</span></div>
+          <div class="manfaat-item"><span>Biaya Transportasi (Darat)</span><span class="val">Rp 5.000.000</span></div>
+          <div class="manfaat-item"><span>Biaya Transportasi (Laut)</span><span class="val">Rp 2.000.000</span></div>
+          <div class="manfaat-item"><span>Biaya Transportasi (Udara)</span><span class="val">Rp 10.000.000</span></div>
+          <div class="manfaat-item"><span>STMB (Sementara Tidak Mampu Bekerja)</span><span class="val">100% Upah (12 bln) → 50% hingga sembuh</span></div>
+          <div class="manfaat-item"><span>Gigi Tiruan</span><span class="val">Maks. Rp 5.000.000</span></div>
+          <div class="manfaat-item"><span>Alat Bantu Dengar</span><span class="val">Maks. Rp 2.500.000</span></div>
+          <div class="manfaat-item"><span>Homecare / Perawatan Rumah</span><span class="val">Maks. Rp 20.000.000</span></div>
+        </div>
+        <div class="manfaat-group">
+          <h3 class="manfaat-group-title">♿ Santunan Kecacatan &amp; Kematian</h3>
+          <div class="manfaat-item"><span>Cacat Sebagian Anatomi</span><span class="val">% Cacat × 80 × Upah Dilaporkan</span></div>
+          <div class="manfaat-item"><span>Cacat Sebagian Fungsi</span><span class="val">% Kurang Fungsi × % Cacat × 80 × Upah Dilaporkan</span></div>
+          <div class="manfaat-item"><span>Cacat Total Tetap</span><span class="val accent-jkk font-bold">56 × Upah Dilaporkan</span></div>
+          <div class="manfaat-item"><span>Santunan Kematian KK</span><span class="val accent-jkk font-bold">48 × Upah Dilaporkan</span></div>
+          <div class="manfaat-item"><span>Santunan Pemakaman</span><span class="val">Rp 10.000.000</span></div>
+          <div class="manfaat-item"><span>Santunan Berkala (dibayar sekaligus)</span><span class="val">Rp 12.000.000</span></div>
+        </div>
+        <div class="manfaat-group">
+          <h3 class="manfaat-group-title">🎓 Beasiswa (untuk 2 Anak Peserta)</h3>
+          <div class="manfaat-item"><span>TK / SD (8 Tahun)</span><span class="val">Rp 1.500.000 × 8 × 2 = <strong>Rp 24.000.000</strong></span></div>
+          <div class="manfaat-item"><span>SMP (3 Tahun)</span><span class="val">Rp 2.000.000 × 3 × 2 = <strong>Rp 12.000.000</strong></span></div>
+          <div class="manfaat-item"><span>SMA (3 Tahun)</span><span class="val">Rp 3.000.000 × 3 × 2 = <strong>Rp 18.000.000</strong></span></div>
+          <div class="manfaat-item"><span>Perguruan Tinggi (5 Tahun)</span><span class="val">Rp 12.000.000 × 5 × 2 = <strong>Rp 120.000.000</strong></span></div>
+          <div class="manfaat-item highlight-item"><span>Maks. Total Beasiswa (2 Anak)</span><span class="val accent-jkk font-bold">Rp 174.000.000</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card result-card manfaat-card manfaat-jkm">
+      <div class="manfaat-header">
+        <div class="manfaat-badge-big badge-jkm">JKM</div>
+        <div><h2 class="section-title">Jaminan Kematian (JKM) — BPU</h2><p class="section-desc">Bukan akibat kecelakaan kerja</p></div>
+      </div>
+      <div class="manfaat-grid manfaat-grid-single">
+        <div class="manfaat-group">
+          <h3 class="manfaat-group-title">🛡️ Santunan Kematian</h3>
+          <div class="manfaat-item"><span>Santunan Kematian</span><span class="val">Rp 20.000.000</span></div>
+          <div class="manfaat-item"><span>Biaya Pemakaman</span><span class="val">Rp 10.000.000</span></div>
+          <div class="manfaat-item"><span>Santunan Berkala (dibayar sekaligus)</span><span class="val">Rp 12.000.000</span></div>
+          <div class="manfaat-item highlight-item"><span>TOTAL Santunan Kematian</span><span class="val accent-jkm font-bold">Rp 42.000.000</span></div>
+          <div class="manfaat-item highlight-item"><span>Beasiswa Usia Sekolah (Maks.)</span><span class="val accent-jkm font-bold">Rp 174.000.000</span></div>
+          <p class="manfaat-note">* Syarat minimal 3 Tahun masa kepesertaan untuk manfaat beasiswa</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card result-card manfaat-card manfaat-jht">
+      <div class="manfaat-header">
+        <div class="manfaat-badge-big badge-jht">JHT</div>
+        <div><h2 class="section-title">Jaminan Hari Tua (JHT) — BPU</h2><p class="section-desc">Akumulasi iuran 2% dari upah yang dapat dicairkan</p></div>
+      </div>
+      <div class="manfaat-grid manfaat-grid-single">
+        <div class="manfaat-group">
+          <h3 class="manfaat-group-title">💰 Ketentuan Pencairan JHT BPU</h3>
+          <div class="manfaat-item"><span>Iuran JHT</span><span class="val accent-jht font-bold">2% dari Upah yang Dilaporkan</span></div>
+          <div class="manfaat-item"><span>Total JHT per Periode Iuran</span><span class="val" id="bpuJhtDisplay">—</span></div>
+          <div class="manfaat-item"><span>Pencairan Penuh</span><span class="val">Usia 56 Tahun / Berhenti Bekerja / Meninggal</span></div>
+          <div class="manfaat-item"><span>Pencairan Sebagian (10%)</span><span class="val">Min. 10 Tahun kepesertaan (masih aktif bekerja)</span></div>
+          <div class="manfaat-item"><span>Pencairan Sebagian (30%)</span><span class="val">Untuk kepemilikan rumah (min. 10 Tahun)</span></div>
+          <p class="manfaat-note">* Manfaat JHT = Akumulasi iuran + hasil pengembangan (imbal hasil ditentukan BPJS)</p>
+        </div>
+      </div>
+    </div>
+
     <div class="pdf-btn-wrapper" style="margin-top: 30px;">
       <button class="btn btn-pdf" id="btnPDFBpu" onclick="downloadPDFBpu()">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
@@ -670,6 +876,190 @@
   <p>Simulasi BPU ini bersifat informatif. Untuk pendaftaran resmi kunjungi <strong>bpjsketenagakerjaan.go.id</strong></p>
 </footer>
 </div><!-- end #page-bpu -->
+
+<!-- ==================== HALAMAN KALKULATOR JAKON ==================== -->
+<div id="page-jakon" style="display:none">
+<header class="site-header">
+  <div class="header-bg-shapes"><div class="shape shape-1"></div><div class="shape shape-2"></div><div class="shape shape-3"></div></div>
+  <div class="header-content">
+    <div class="logo-area">
+      <button class="btn-kembali" onclick="kembali()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Kembali
+      </button>
+      <div style="display:flex; gap:15px; margin-right:1.5rem;">
+        <div class="logo-icon"><img src="logo-bpjs.png?v=2" alt="Logo BPJS Ketenagakerjaan" /></div>
+        <div class="logo-icon"><img src="logo-simtek.png" alt="Logo SIMTEK" /></div>
+      </div>
+      <div class="logo-text">
+        <span class="logo-sub">Simulasi Iuran — Program <strong>JAKON</strong></span>
+      </div>
+    </div>
+    <div class="header-badges">
+      <span class="badge badge-jkk">JKK</span>
+      <span class="badge badge-jkm">JKM</span>
+    </div>
+  </div>
+  <div class="header-hero-text">
+    <h1>Kalkulator Jasa Konstruksi<br/><span class="gradient-text">BPJAMSOSTEK</span></h1>
+    <p>Hitung iuran JKK dan JKM untuk proyek jasa konstruksi berdasarkan aturan tiering (tarif progresif berjenjang).</p>
+  </div>
+</header>
+<main class="main-container">
+  <section class="card section-info" id="section-jakon-info">
+    <div class="card-header-row">
+      <div class="step-badge">1</div>
+      <div><h2 class="section-title">Informasi Proyek Konstruksi</h2><p class="section-desc">Masukkan nilai kontrak bruto (termasuk PPN 11%)</p></div>
+    </div>
+    <div class="form-grid form-grid-3">
+      <div class="form-group" style="grid-column: span 3;">
+        <label for="jakonNamaProyek">Nama / Deskripsi Proyek</label>
+        <input type="text" id="jakonNamaProyek" placeholder="Contoh: Pembangunan Gedung Perkantoran Tower A" />
+      </div>
+      <div class="form-group" style="grid-column: span 2;">
+        <label for="jakonNilai">Nilai Kontrak Bruto (Rp)</label>
+        <input type="number" id="jakonNilai" placeholder="Contoh: 2491176851191" min="0" step="1000" />
+      </div>
+      <div class="form-group">
+        <label for="jakonCaraBayar">Cara Pembayaran Iuran</label>
+        <select id="jakonCaraBayar" onchange="onJakonCaraBayarChange()">
+          <option value="Sekaligus">Sekaligus (Lunas)</option>
+          <option value="Termin">Bertahap (Termin 1, 2, 3)</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="card section-upload" id="section-jakon-upload">
+    <div class="card-header-row">
+      <div class="step-badge">2</div>
+      <div><h2 class="section-title">Lampiran File</h2><p class="section-desc">Upload file pendukung yang akan dicetak bersama laporan PDF JAKON</p></div>
+    </div>
+    <div class="upload-area" onclick="document.getElementById('jakonFileInput').click()">
+      <div class="upload-icon">📎</div>
+      <p class="upload-text">Klik atau drag &amp; drop file di sini</p>
+      <p class="upload-sub">Mendukung: JPG, PNG — Bisa lebih dari 1 file</p>
+      <input type="file" id="jakonFileInput" multiple accept=".jpg,.jpeg,.png" style="display:none" onchange="handleFileUploadJakon(this.files)" />
+    </div>
+    <div id="jakonFileList" class="file-list"></div>
+  </section>
+
+  <div class="hitung-btn-wrapper">
+    <button class="btn btn-hitung" id="btnHitungJakon" onclick="hitungJakon()">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+      Hitung Iuran JAKON
+    </button>
+  </div>
+
+  <section class="results-section" id="resultsSectionJakon" style="display:none">
+    
+    <div class="card result-card" id="rekapJakonCard">
+      <div class="card-header-row">
+        <div class="result-icon result-icon-blue">📊</div>
+        <div><h2 class="section-title">Rincian Perhitungan Tiering</h2><p class="section-desc">Berdasarkan Nilai Kontrak (Netto tanpa PPN)</p></div>
+      </div>
+      <div class="table-wrapper">
+        <table class="result-table" id="jakonTable">
+          <thead>
+            <tr><th>Lapisan (Tier)</th><th>Rentang Kontrak</th><th>Porsi Nilai Netto (Rp)</th><th>Rate Iuran</th><th>Jumlah Iuran (Rp)</th></tr>
+          </thead>
+          <tbody id="jakonBody"></tbody>
+          <tfoot id="jakonFoot"></tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="card result-card" id="terminJakonCard" style="display:none; margin-top: 1.5rem;">
+      <div class="card-header-row">
+        <div class="result-icon" style="color:var(--jht-color);background:var(--jht-bg);">📅</div>
+        <div><h2 class="section-title">Jadwal Pembayaran (Bertahap / Termin)</h2><p class="section-desc">Pembagian tagihan Iuran Jasa Konstruksi</p></div>
+      </div>
+      <div class="table-wrapper">
+        <table class="result-table" id="jakonTerminTable">
+          <thead>
+            <tr><th>Tahapan Pembayaran</th><th>Persentase Tagihan</th><th>Nilai Tagihan Iuran (Rp)</th></tr>
+          </thead>
+          <tbody id="jakonTerminBody"></tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- MANFAAT JAKON -->
+    <div class="card result-card manfaat-card manfaat-jkk" style="margin-top:1.5rem;">
+      <div class="manfaat-header">
+        <div class="manfaat-badge-big badge-jkk">JKK</div>
+        <div><h2 class="section-title">Jaminan Kecelakaan Kerja (JKK) &mdash; JAKON</h2><p class="section-desc">PP 44 Tahun 2015 &amp; PP 82 Tahun 2019</p></div>
+      </div>
+      <div class="manfaat-grid">
+        <div class="manfaat-group">
+          <h3 class="manfaat-group-title">🏥 Perawatan &amp; Pengobatan</h3>
+          <div class="manfaat-item"><span>Kelas Perawatan</span><span class="val accent-jkk">Kelas 1 — Tanpa Batas Biaya</span></div>
+          <div class="manfaat-item"><span>Biaya Transportasi (Darat)</span><span class="val">Rp 5.000.000</span></div>
+          <div class="manfaat-item"><span>Biaya Transportasi (Laut)</span><span class="val">Rp 2.000.000</span></div>
+          <div class="manfaat-item"><span>Biaya Transportasi (Udara)</span><span class="val">Rp 10.000.000</span></div>
+          <div class="manfaat-item"><span>STMB (Sementara Tidak Mampu Bekerja)</span><span class="val">100% Upah (12 bln) → 50% hingga sembuh</span></div>
+          <div class="manfaat-item"><span>Gigi Tiruan</span><span class="val">Maks. Rp 5.000.000</span></div>
+          <div class="manfaat-item"><span>Alat Bantu Dengar</span><span class="val">Maks. Rp 2.500.000</span></div>
+          <div class="manfaat-item"><span>Homecare / Perawatan Rumah</span><span class="val">Maks. Rp 20.000.000</span></div>
+        </div>
+        <div class="manfaat-group">
+          <h3 class="manfaat-group-title">♿ Santunan Kecacatan &amp; Kematian KK</h3>
+          <div class="manfaat-item"><span>Cacat Sebagian Anatomi</span><span class="val">% Cacat × 80 × Upah Terlapor</span></div>
+          <div class="manfaat-item"><span>Cacat Sebagian Fungsi</span><span class="val">% Kurang Fungsi × % Cacat × 80 × Upah Terlapor</span></div>
+          <div class="manfaat-item highlight-item"><span>Cacat Total Tetap</span><span class="val accent-jkk font-bold">56 × Upah Terlapor</span></div>
+          <div class="manfaat-item"><span>Santunan Kematian KK</span><span class="val accent-jkk font-bold">48 × Upah Terlapor</span></div>
+          <div class="manfaat-item"><span>Santunan Pemakaman</span><span class="val">Rp 10.000.000</span></div>
+          <div class="manfaat-item"><span>Santunan Berkala (dibayar sekaligus)</span><span class="val">Rp 12.000.000</span></div>
+        </div>
+        <div class="manfaat-group">
+          <h3 class="manfaat-group-title">🎓 Beasiswa (untuk 2 Anak Peserta)</h3>
+          <div class="manfaat-item"><span>TK / SD (8 Tahun)</span><span class="val">Rp 1.500.000 × 8 × 2 = <strong>Rp 24.000.000</strong></span></div>
+          <div class="manfaat-item"><span>SMP (3 Tahun)</span><span class="val">Rp 2.000.000 × 3 × 2 = <strong>Rp 12.000.000</strong></span></div>
+          <div class="manfaat-item"><span>SMA (3 Tahun)</span><span class="val">Rp 3.000.000 × 3 × 2 = <strong>Rp 18.000.000</strong></span></div>
+          <div class="manfaat-item"><span>Perguruan Tinggi (5 Tahun)</span><span class="val">Rp 12.000.000 × 5 × 2 = <strong>Rp 120.000.000</strong></span></div>
+          <div class="manfaat-item highlight-item"><span>Maks. Total Beasiswa (2 Anak)</span><span class="val accent-jkk font-bold">Rp 174.000.000</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card result-card manfaat-card manfaat-jkm" style="margin-top:1.5rem;">
+      <div class="manfaat-header">
+        <div class="manfaat-badge-big badge-jkm">JKM</div>
+        <div><h2 class="section-title">Jaminan Kematian (JKM) &mdash; JAKON</h2><p class="section-desc">Bukan akibat kecelakaan kerja</p></div>
+      </div>
+      <div class="manfaat-grid manfaat-grid-single">
+        <div class="manfaat-group">
+          <h3 class="manfaat-group-title">🛡️ Santunan Kematian</h3>
+          <div class="manfaat-item"><span>Santunan Kematian</span><span class="val">Rp 20.000.000</span></div>
+          <div class="manfaat-item"><span>Biaya Pemakaman</span><span class="val">Rp 10.000.000</span></div>
+          <div class="manfaat-item"><span>Santunan Berkala (dibayar sekaligus)</span><span class="val">Rp 12.000.000</span></div>
+          <div class="manfaat-item highlight-item"><span>TOTAL Santunan Kematian</span><span class="val accent-jkm font-bold">Rp 42.000.000</span></div>
+          <div class="manfaat-item highlight-item"><span>Beasiswa Usia Sekolah (Maks.)</span><span class="val accent-jkm font-bold">Rp 174.000.000</span></div>
+          <p class="manfaat-note">* Syarat minimal 3 Tahun masa kepesertaan</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pdf-btn-wrapper" style="margin-top: 30px;">
+      <button class="btn btn-pdf" onclick="downloadPDFJakon()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Download Laporan PDF JAKON
+      </button>
+      <button class="btn btn-outline" onclick="window.print()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Cetak Halaman
+      </button>
+      <button class="btn btn-ghost" onclick="resetFormJakon()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.65"/></svg>
+        Reset Form
+      </button>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <p>Simulasi JAKON ini bersifat informatif. Untuk pendaftaran resmi kunjungi <strong>bpjsketenagakerjaan.go.id</strong></p>
+</footer>
+</div><!-- end #page-jakon -->
 
 <script src="app.js?v=3"></script>
 </body>
